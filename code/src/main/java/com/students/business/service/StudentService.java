@@ -1,9 +1,13 @@
 package com.students.business.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.students.business.dto.StudentDto;
+import com.students.data.entity.Course;
+import com.students.data.entity.Exam;
 import com.students.data.entity.Student;
 import com.students.data.repository.StudentJpaRepository;
 
@@ -35,6 +39,14 @@ public class StudentService {
 		Student student = studentJpaRepository.findByStudentId(studentId);
 		student.setStudentGroup(group);
 		studentJpaRepository.save(student);
+	}
+
+	public List<Course> getCoursesByStudentId(int studentId) {
+		return studentJpaRepository.findAllCoursesByStudentId(studentId);
+	}
+
+	public List<Exam> getGradesByStudentId(int studentId) {
+		return studentJpaRepository.findAllExamsByStudentId(studentId);
 	}
 
 }

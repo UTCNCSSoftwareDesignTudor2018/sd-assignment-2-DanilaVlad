@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import com.students.business.dto.StudentDto;
 import com.students.business.service.StudentService;
 import com.students.presentation.view.StudentView;
+import com.students.presentation.view.TeacherView;
 
 @Controller
 public class StudentController {
@@ -18,28 +19,21 @@ public class StudentController {
 	private StudentView studentView;
 	@Autowired
 	StudentService studentService;
+	@Autowired
+	TeacherView teacherView;
 
 	public StudentController(StudentView studentView, StudentService studentService) {
 		this.studentView = studentView;
-		studentView.setStudentLoginListener(new StudentLoginListener());
 		studentView.setStudentViewInfoListener(new StudentViewInfoListener());
 		studentView.setStudentCreateProfileListener(new StudentCreateProfileListener());
 		studentView.setStudentUpdateProfileListener(new StudentUpdateProfileListener());
+		studentView.setStudentViewCoursesListener(new StudentViewCoursesListener());
+		studentView.setStudentViewGradesListener(new StudentViewGradesListener());
+
 	}
 
 	public void setStudentView(StudentView studentView) {
 		this.studentView = studentView;
-	}
-
-	private class StudentLoginListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == studentView.loginStudentBtn) {
-				studentView.panelStudent.setVisible(true);
-			}
-
-		}
 	}
 
 	private class StudentViewInfoListener implements ActionListener {
@@ -51,7 +45,6 @@ public class StudentController {
 				studentName = studentView.studentNameText.getText();
 				studentView.areaInfo.setText(studentService.getStudentByName(studentName).toString());
 			}
-
 		}
 	}
 
@@ -93,6 +86,36 @@ public class StudentController {
 				group = studentView.editStudentGroupText.getText();
 				studentService.updateGroup(id, group);
 				studentView.areaInfo.setText(studentService.getStudentById(id).toString());
+			}
+
+		}
+	}
+
+	private class StudentViewCoursesListener implements ActionListener {
+		int id = 0;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == studentView.viewStudentCoursesBtn) {
+				id = Integer.parseInt(studentView.editStudentIdText.getText());
+				studentView.areaInfo.setText(studentService.getCoursesByStudentId(id).toString()
+						.substring(1, studentService.getCoursesByStudentId(id).toString().length() - 1)
+						.replace(",", "\n"));
+			}
+
+		}
+	}
+
+	private class StudentViewGradesListener implements ActionListener {
+		int id = 0;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == studentView.viewStudentGradesBtn) {
+				id = Integer.parseInt(studentView.editStudentIdText.getText());
+				studentView.areaInfo.setText(studentService.getGradesByStudentId(id).toString()
+						.substring(1, studentService.getGradesByStudentId(id).toString().length() - 1)
+						.replace(",", "\n"));
 			}
 
 		}

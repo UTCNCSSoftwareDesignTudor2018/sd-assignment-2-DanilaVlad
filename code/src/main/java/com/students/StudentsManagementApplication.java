@@ -5,28 +5,26 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.students.business.service.StudentService;
-import com.students.presentation.controller.StudentController;
-import com.students.presentation.view.StudentView;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import com.students.presentation.controller.HomeController;
+import com.students.presentation.view.HomeView;
 
 @SpringBootApplication
-public class StudentsManagementApplication implements CommandLineRunner{
+public class StudentsManagementApplication implements CommandLineRunner {
 	@Autowired
-	StudentView studentView;
+	HomeView homeView;
 	@Autowired
-	StudentController studentController;
-	@Autowired
-	StudentService studentService;
-	
-	public static void main(String[] args)  {
+	HomeController homeController;
+
+	public static void main(String[] args) {
 		System.setProperty("java.awt.headless", "false");
 		SpringApplication.run(StudentsManagementApplication.class, args);
 	}
-	
 
 	@Override
 	public void run(String... args) throws Exception {
-		studentView.getFrame().setVisible(true);
-		studentController.setStudentView(studentView);	
+		homeView.getFrame().setVisible(true);
+		homeController.setHomeView(homeView);			
 	}
 }

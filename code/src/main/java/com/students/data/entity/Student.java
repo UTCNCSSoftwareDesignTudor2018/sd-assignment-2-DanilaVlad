@@ -1,10 +1,16 @@
 package com.students.data.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -29,8 +35,26 @@ public class Student {
 	@Column
 	private String studentGroup;
 
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "enrollments", joinColumns = { @JoinColumn(name = "studentsStudentId") }, inverseJoinColumns = {
+			@JoinColumn(name = "coursesCourseId") })
+	List<Course> courses;
+
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "enrollments", joinColumns = { @JoinColumn(name = "studentsStudentId") }, inverseJoinColumns = {
+			@JoinColumn(name = "examsExamId") })
+	List<Exam> exams;
+
 	public int getStudentId() {
 		return studentId;
+	}
+
+	public Student() {
+	}
+
+	public Student(int studentId) {
+		super();
+		this.studentId = studentId;
 	}
 
 	public void setStudentId(int studentId) {
