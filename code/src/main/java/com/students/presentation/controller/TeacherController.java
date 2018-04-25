@@ -2,7 +2,6 @@ package com.students.presentation.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -141,16 +140,13 @@ public class TeacherController {
 	}
 	
 	private class TeacherGenerateReportListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == teacherView.generateReportBtn) {
-				try {
-					teacherService.factoryMethod("doc");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				teacherView.areaInfo.setText("doc generated in 'reports' collection\n from 'reports' mongoDB ");
+				String teacherName = "";
+				teacherName = teacherView.teacherNameText.getText();
+					teacherService.factoryMethod("teacher", teacherName);
+				teacherView.areaInfo.setText("Teacher request generated in 'reportsCollection' collection\n from 'reports' mongoDB ");
 			}
 		}
 	}

@@ -5,8 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
+import com.students.business.service.TeacherService;
 import com.students.presentation.controller.HomeController;
 import com.students.presentation.view.HomeView;
 
@@ -16,6 +15,9 @@ public class StudentsManagementApplication implements CommandLineRunner {
 	HomeView homeView;
 	@Autowired
 	HomeController homeController;
+	@Autowired
+	TeacherService teacherService;
+
 
 	public static void main(String[] args) {
 		System.setProperty("java.awt.headless", "false");
@@ -25,6 +27,6 @@ public class StudentsManagementApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		homeView.getFrame().setVisible(true);
-		homeController.setHomeView(homeView);			
+		homeController.setHomeView(homeView);
 	}
 }

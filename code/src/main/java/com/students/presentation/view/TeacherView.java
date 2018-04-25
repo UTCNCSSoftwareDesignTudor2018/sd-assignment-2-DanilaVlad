@@ -101,7 +101,7 @@ public class TeacherView {
 		updateEnrollmentBtn.setBounds(115, 230, 120, 20);
 		panelTeacher.add(updateEnrollmentBtn);
 		
-		generateReportBtn = new JButton("Mongo report");
+		generateReportBtn = new JButton("Gen. report");
 		generateReportBtn.setBounds(115, 115, 120, 20);
 		panelTeacher.add(generateReportBtn);
 		

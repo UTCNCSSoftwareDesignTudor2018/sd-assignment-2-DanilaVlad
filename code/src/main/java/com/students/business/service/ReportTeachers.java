@@ -1,25 +1,19 @@
 package com.students.business.service;
 
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.students.data.entity.Report;
-import com.students.data.repository.TeacherJpaRepository;
+import com.students.data.entity.Teacher;
 
 @Service
 public class ReportTeachers implements ReportGenerator {
-
+	
 	private Report report;
 	@Autowired
-	TeacherJpaRepository teacherJpaRepository;
+	TeacherService teacherService;
 
 	public ReportTeachers() {
 
@@ -31,12 +25,9 @@ public class ReportTeachers implements ReportGenerator {
 	}
 
 	@Override
-	public void getReport() throws UnsupportedEncodingException, FileNotFoundException, IOException {
-		String fileName = "Report" + ".doc";
-		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "utf-8"))) {
-			this.report = new Report("Teacher report format");
-		}
-
+	public void getReport(String teacherName) {
+		Teacher teacher = teacherService.getTeacherByName(teacherName);
+			this.report = new Report(teacher.getTeacherName().toString() + " " + teacher.getTeacherAddress().toString());
 	}
 
 }
